@@ -3,6 +3,7 @@ package com.ems.rest;
 import com.ems.entity.Device;
 import com.ems.service.DeviceService;
 import com.ems.util.Test;
+import com.ems.util.Test2;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -24,8 +25,7 @@ public class DeviceResource {
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")  //表示响应的结果以文本方式返回
 	public Device get(@PathParam("tagId") String tagId){
 		System.out.println(Test.getName("wangyingying"));
+		System.out.println(Test2.getTotal(10, 12));
 		return deviceService.get(tagId);
 	}
-	
-	
 }

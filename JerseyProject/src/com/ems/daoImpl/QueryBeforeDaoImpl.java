@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -37,10 +36,15 @@ public class QueryBeforeDaoImpl implements QueryBeforeDao {
 	@Override
 	public List<AllElec> queryBeforeEnergyType(String id, String name) {
 		// TODO Auto-generated method stub
-		String sql = "select b.tagId from (select deviceId,parentSpaceId from equipment_space_parent where space_device_Type = '设备' and parentSpaceId='"
-				+ id
-				+ "')a,device_propertie_tag b,device_propertie c  where a.deviceId = b.deviceId and b.devicePropertieID=c.devicePropertieID and c.energyConsumptionChildType = '"
-				+ "总用" + name + "'";
+		String sql;
+		if(name.equals("电")){
+			sql = "select b.tagId from (select deviceId,parentSpaceId from equipment_space_parent where space_device_Type = '设备' and parentSpaceId='"+id+"') a,device_propertie_tag b, device_propertie c where a.deviceId = b.deviceId and b.devicePropertieID=c.devicePropertieID and c.energyConsumptionChildType in ('"+"总用"+ name +"','空调用电')";
+		}else{
+			sql = "select b.tagId from (select deviceId,parentSpaceId from equipment_space_parent where space_device_Type = '设备' and parentSpaceId='"
+					+ id
+					+ "')a,device_propertie_tag b,device_propertie c  where a.deviceId = b.deviceId and b.devicePropertieID=c.devicePropertieID and c.energyConsumptionChildType = '"
+					+ "总用" + name + "'";
+		}
 		System.out.println(sql);
 		String tagId = (String) jdbcTemplate.queryForObject(sql, String.class);
 		System.out.println("1111111111111111============" + tagId);

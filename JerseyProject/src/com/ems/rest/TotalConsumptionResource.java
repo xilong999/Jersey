@@ -50,13 +50,10 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ems.entity.Device;
-import com.ems.entity.JavaBean1;
 import com.ems.entity.LastOneDayList;
 import com.ems.entity.NowData;
-import com.ems.service.QueryBeforeService;
+import com.ems.entity.RisingLevels;
 import com.ems.service.TotalConsumptionService;
-import com.ems.util.MongoDBUtil;
 
 /**
  * @author Pavel Bucek (pavel.bucek at oracle.com)
@@ -89,5 +86,13 @@ public class TotalConsumptionResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public NowData getNowdata(@PathParam("type") String type){
         return totalConsumptionService.getNowdata(type);
+    }
+    
+    
+    @Path("/risingLevels/{type}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public RisingLevels risingLevels(@PathParam("type") String type){
+		return totalConsumptionService.risingLevels(type);
     }
 }
